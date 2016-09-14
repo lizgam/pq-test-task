@@ -39,7 +39,9 @@ class Node {
 	}
 
 	swapWithParent() {
-		if (!this.parent) { return; }
+		if (!this.parent) {
+			return;
+		}
 		let this_p = this.parent;
 		let this_le = this.left;
 		let this_re = this.right;
@@ -47,15 +49,15 @@ class Node {
 		if (this.parent.left === this) {
 			if (this.parent.right) {
 				this.parent.right.parent = this;
-				this.right = this.parent.right;
 			}
+			this.right = this.parent.right;
 			this.left = this.parent;
-		} else if (this.parent.right == this) {
+		} else if (this.parent.right === this) {
 			if (this.parent.left) {
 				this.parent.left.parent = this;
-				this.left = this.parent.left;
 			}
 			this.right = this.parent;
+			this.left = this.parent.left;
 		}
 
 		if (this.parent.parent) {
@@ -67,13 +69,15 @@ class Node {
 		}
 
 		if (this_le) {
-			this_le.parent = this.parent;
-			this.parent.left = this_le;
+			this_le.parent = this_p;
+			// this_le.parent.left = this_le;
 		}
 		if (this_re) {
-			this_re.parent = this.parent;
-			this.parent.right = this_re;
+			this_re.parent = this_p;
+			// this_re.parent.right = this_re;
 		}
+		this_p.left = this_le;
+		this_p.right = this_re;
 		this.parent = this.parent.parent;
 		this_p.parent = this;
 	}
